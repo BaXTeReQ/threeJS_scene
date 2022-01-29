@@ -1,0 +1,30 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+body,
+html {
+    height: 100%;
+    background-color: $black;
+    color: white;
+    scroll-behavior: smooth;
+    overflow: hidden;
+}
+
+button {
+    cursor: pointer;
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
+
+// REST //
+canvas {
+    width: 100%;
+    height: 100%;
+}

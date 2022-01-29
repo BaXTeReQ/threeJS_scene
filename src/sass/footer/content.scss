@@ -1,0 +1,25 @@
+&-content {
+    @extend .container;
+    background-color: $secondary-color;
+    color: $white;
+    padding-top: 25px;
+
+    div {
+        @extend .col-xs-12;
+        text-align: center;
+        margin-top: 25px;
+
+        li {
+            margin: 5px 0;
+        }
+
+        h2 {
+            text-transform: uppercase;
+            font-size: 20px;
+        }
+
+        p {
+            text-align: justify;
+        }
+    }
+}
