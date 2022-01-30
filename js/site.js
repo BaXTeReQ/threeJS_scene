@@ -23,20 +23,23 @@ daySpotLight.position.set(0, 100, 0);
 daySpotLight.shadow.mapSize.width = 2048;
 daySpotLight.shadow.mapSize.height = 2048;
 daySpotLight.angle = Math.PI / 4;
-daySpotLight.castShadow = true; // scene.add(daySpotLight);
-var daySpotLightHelper = new THREE.SpotLightHelper(daySpotLight); // scene.add(daySpotLightHelper)
+daySpotLight.castShadow = true;
+scene.add(daySpotLight);
+var daySpotLightHelper = new THREE.SpotLightHelper(daySpotLight);
+scene.add(daySpotLightHelper);
 /* add ambient light for better effect */
 var ambientLight = new THREE.AmbientLight(0x494949, .5);
 scene.add(ambientLight);
 /* night light */
 var nightSpotLight = new THREE.SpotLight(0xa5b1c2, .25);
-nightSpotLight.position.set(0, 100, 0);
+nightSpotLight.position.set(0, -100, 0);
 nightSpotLight.shadow.mapSize.width = 2048;
 nightSpotLight.shadow.mapSize.height = 2048;
 nightSpotLight.angle = Math.PI / 4;
 nightSpotLight.castShadow = true;
 scene.add(nightSpotLight);
-var nightSpotLightHelper = new THREE.SpotLightHelper(nightSpotLight); // scene.add(nightSpotLightHelper)
+var nightSpotLightHelper = new THREE.SpotLightHelper(nightSpotLight);
+scene.add(nightSpotLightHelper);
 /* add ambient light for better effect */
 // const nightAmbientLight = new THREE.AmbientLight(0x000000);
 // scene.add(nightAmbientLight)
@@ -185,8 +188,7 @@ var lanternLightMaterial = new THREE.MeshBasicMaterial({
 var lanternLight = new THREE.Mesh(lanternLightGeometry, lanternLightMaterial);
 lanternLight.position.set(0, 95, -5);
 lanternLight.rotateX(Math.PI / 10);
-lanternSingle.add(lanternLight);
-lanternSingle.add(lanternBottom, lanternBase, lanternUpper);
+lanternSingle.add(lanternBottom, lanternBase, lanternUpper, lanternLight);
 var lanternsArray = new Array();
 var lanternsBulbsArray = new Array();
 for (var i = 0; i < 8; i++) {
@@ -209,7 +211,6 @@ for (var i = 0; i < 8; i++) {
       lanternsBulbsArray[i].target.position.set(30 - i * 10, 0, -2.3);
     }
     if (i > 2) {
-      /* b = 10 */
       lanternsArray[i].translateX(10);
       lanternsBulbsArray[i].translateX(-10);
       lanternsBulbsArray[i].target.translateX(-10);
@@ -492,23 +493,24 @@ renderer.render(scene, camera);
 /* animation settings */
 function animate() {
   requestAnimationFrame(animate); // dobre/przetestowane wartosci
-  // daySpotLight.position.x = 100 * Math.sin(Date.now() / 4800)
-  // daySpotLight.position.y = 100 * Math.cos(Date.now() / 4800)
-  // nightSpotLight.position.x = -100 * Math.sin(Date.now() / 4800)
-  // nightSpotLight.position.y = -100 * Math.cos(Date.now() / 4800)
-  //
+  daySpotLight.position.x = 100 * Math.sin(Date.now() / 4800);
+  daySpotLight.position.y = 100 * Math.cos(Date.now() / 4800);
+  nightSpotLight.position.x = -100 * Math.sin(Date.now() / 4800);
+  nightSpotLight.position.y = -100 * Math.cos(Date.now() / 4800); //
   //te raczej tez
   if (daySpotLight.position.y < 70 && daySpotLight.position.x > 0) {
     daySpotLight.intensity -= .002;
     if (daySpotLight.intensity < .0009 || daySpotLight.position.y < -20) {
       daySpotLight.intensity = 0;
     }
+    lanternsOn(daySpotLight.position.y);
   }
   if (daySpotLight.position.y > -20 && daySpotLight.position.x < 0) {
     daySpotLight.intensity += .002;
     if (daySpotLight.intensity > .499) {
       daySpotLight.intensity = .5;
     }
+    lanternsOff(daySpotLight.position.y);
   }
   if (daySpotLight.position.y < -10) daySpotLight.intensity = 0;
   if (nightSpotLight.position.y < 70 && nightSpotLight.position.x > 0) {
@@ -594,11 +596,37 @@ function animate() {
   //         nightSpotLight.intensity -= .025
   //     else nightSpotLight.intensity = 0
   // }
+  // console.log(lanternsBulbsArray[0].children)
   controls.update();
   renderer.render(scene, camera);
 }
-function lanterns() {
-  console.log(lanternsArray);
+function lanternsOff(y) {
+  lanternsBulbsArray.forEach(function (e) {
+    if (e.intensity <= .01225 || y > 10) e.intensity = 0;else e.intensity -= .01225;
+  });
+  lanternsArray.forEach(function (e) {
+    if (e.children[3].material.opacity <= .1) e.children[3].material.opacity = .1;else e.children[3].material.opacity -= .00225; //if(f.material.opacity >= 1) f.material.opacity = 1
+    //else f.material.opacity += .05;
+  }); // lanternsArray.forEach(e => {
+  //     e.children.forEach(f => {
+  //         if(f.material.opacity <= .15) f.material.opacity = .1
+  //         else f.material.opacity -= .05;
+  //     });
+  // });
+}
+function lanternsOn(y) {
+  lanternsBulbsArray.forEach(function (e) {
+    if (e.intensity >= .84 || y < -20) e.intensity = .85;else e.intensity += .01225;
+  });
+  lanternsArray.forEach(function (e) {
+    if (e.children[3].material.opacity >= 1) e.children[3].material.opacity = 1;else e.children[3].material.opacity += .00225; //if(f.material.opacity >= 1) f.material.opacity = 1
+    //else f.material.opacity += .05;
+  }); // lanternsArray.forEach(e => {
+  //     e.children.forEach(f => {
+  //         if(f.material.opacity >= 1) f.material.opacity = 1
+  //         else f.material.opacity += .05;
+  //     });
+  // });
 }
 animate();
 //# sourceMappingURL=maps/site.js.map

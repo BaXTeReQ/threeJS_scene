@@ -8,11 +8,11 @@ function animate() {
     requestAnimationFrame(animate);
 
     // dobre/przetestowane wartosci
-    // daySpotLight.position.x = 100 * Math.sin(Date.now() / 4800)
-    // daySpotLight.position.y = 100 * Math.cos(Date.now() / 4800)
+    daySpotLight.position.x = 100 * Math.sin(Date.now() / 4800)
+    daySpotLight.position.y = 100 * Math.cos(Date.now() / 4800)
 
-    // nightSpotLight.position.x = -100 * Math.sin(Date.now() / 4800)
-    // nightSpotLight.position.y = -100 * Math.cos(Date.now() / 4800)
+    nightSpotLight.position.x = -100 * Math.sin(Date.now() / 4800)
+    nightSpotLight.position.y = -100 * Math.cos(Date.now() / 4800)
     //
 
     //te raczej tez
@@ -21,12 +21,14 @@ function animate() {
         if (daySpotLight.intensity < .0009 || daySpotLight.position.y < -20) {
             daySpotLight.intensity = 0
         }
+        lanternsOn(daySpotLight.position.y);
     }
     if (daySpotLight.position.y > -20 && daySpotLight.position.x < 0) {
         daySpotLight.intensity += .002
         if (daySpotLight.intensity > .499) {
             daySpotLight.intensity = .5
         }
+        lanternsOff(daySpotLight.position.y);
     }
     if (daySpotLight.position.y < -10)
         daySpotLight.intensity = 0     
@@ -140,19 +142,48 @@ function animate() {
     //     else nightSpotLight.intensity = 0
     // }
 
+    // console.log(lanternsBulbsArray[0].children)
+
     controls.update();
     renderer.render(scene, camera);
 }
 
-function lanterns(){
-    console.log(lanternsArray)
-
-    
-
-
+function lanternsOff(y){
+    lanternsBulbsArray.forEach(e => {
+        if(e.intensity <= .01225 || y > 10) e.intensity = 0
+        else e.intensity -= .01225;
+    });
+    lanternsArray.forEach(e => {
+        if(e.children[3].material.opacity <= .1) e.children[3].material.opacity = .1;
+        else e.children[3].material.opacity -= .00225;
+        //if(f.material.opacity >= 1) f.material.opacity = 1
+        //else f.material.opacity += .05;
+    });
+    // lanternsArray.forEach(e => {
+    //     e.children.forEach(f => {
+    //         if(f.material.opacity <= .15) f.material.opacity = .1
+    //         else f.material.opacity -= .05;
+    //     });
+    // });
 }
 
-
-
+function lanternsOn(y){
+    lanternsBulbsArray.forEach(e => {
+        if(e.intensity >= .84 || y < -20) e.intensity = .85
+        else e.intensity += .01225;
+    });
+    lanternsArray.forEach(e => {
+        if(e.children[3].material.opacity >= 1) e.children[3].material.opacity = 1;
+        else e.children[3].material.opacity += .00225;
+        //if(f.material.opacity >= 1) f.material.opacity = 1
+        //else f.material.opacity += .05;
+    });
+    // lanternsArray.forEach(e => {
+    //     e.children.forEach(f => {
+    //         if(f.material.opacity >= 1) f.material.opacity = 1
+    //         else f.material.opacity += .05;
+    //     });
+    // });
+}
 
 animate();

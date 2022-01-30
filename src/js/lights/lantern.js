@@ -22,9 +22,8 @@ const lanternLightMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, opac
 const lanternLight = new THREE.Mesh(lanternLightGeometry, lanternLightMaterial);
 lanternLight.position.set(0, 95, -5)
 lanternLight.rotateX(Math.PI / 10)
-lanternSingle.add(lanternLight)
 
-lanternSingle.add(lanternBottom, lanternBase, lanternUpper);
+lanternSingle.add(lanternBottom, lanternBase, lanternUpper, lanternLight);
 
 const lanternsArray = new Array();
 const lanternsBulbsArray = new Array();
@@ -48,7 +47,7 @@ for (let i = 0; i < 8; i++) {
             lanternsBulbsArray[i].position.set(30 - i * 10, 8, -7.3)
             lanternsBulbsArray[i].target.position.set(30 - i * 10, 0, -2.3)
         }
-        if (i > 2){ /* b = 10 */ 
+        if (i > 2){
             lanternsArray[i].translateX(10)
             lanternsBulbsArray[i].translateX(-10)            
             lanternsBulbsArray[i].target.translateX(-10)            
