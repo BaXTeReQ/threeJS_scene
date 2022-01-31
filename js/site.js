@@ -17,6 +17,8 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 var controls = new THREE.OrbitControls(camera, renderer.domElement);
 /* add the output of the renderer to the html element */
 document.getElementById("WebGL-output").appendChild(renderer.domElement);
+/* texture loader */
+var textureLoader = new THREE.TextureLoader();
 /* day light */
 var daySpotLight = new THREE.SpotLight(0xfdfbd3, .5);
 daySpotLight.position.set(0, 100, 0);
@@ -36,8 +38,7 @@ nightSpotLight.position.set(0, -100, 0);
 nightSpotLight.shadow.mapSize.width = 2048;
 nightSpotLight.shadow.mapSize.height = 2048;
 nightSpotLight.angle = Math.PI / 4;
-nightSpotLight.castShadow = true;
-scene.add(nightSpotLight);
+nightSpotLight.castShadow = true; // scene.add(nightSpotLight);
 var nightSpotLightHelper = new THREE.SpotLightHelper(nightSpotLight);
 scene.add(nightSpotLightHelper);
 /* add ambient light for better effect */
@@ -111,23 +112,43 @@ for (var i = 0; i < 7; i++) {
 }
 "use strict";
 //STREET.JS
+var roadTexture1 = textureLoader.load('../ProjektGrafika/textures/road1.png');
+var roadTexture2 = textureLoader.load('../ProjektGrafika/textures/road2.png');
 /* base street object */
 var streetGeometry = new THREE.BoxGeometry(1, 0.1, 1);
-var streetMaterial = new THREE.MeshStandardMaterial({
-  color: 0x34495e
+var streetMaterial1 = new THREE.MeshStandardMaterial({
+  /* color: 0x34495e */
+  color: 0xffffff,
+  map: roadTexture1,
+  side: THREE.DoubleSide
 });
-var streetBase = new THREE.Mesh(streetGeometry, streetMaterial);
-streetBase.receiveShadow = true;
+var streetMaterial2 = new THREE.MeshStandardMaterial({
+  /* color: 0x34495e */
+  color: 0xffffff,
+  map: roadTexture2,
+  side: THREE.DoubleSide
+});
+var streetBase1 = new THREE.Mesh(streetGeometry, streetMaterial1);
+var streetBase2 = new THREE.Mesh(streetGeometry, streetMaterial2);
+streetBase1.receiveShadow = true;
 var streetsArray = new Array();
-for (var i = 0; i < 2; i++) {
-  streetsArray[i] = streetBase.clone();
-  streetsArray[i].scale.set(70, 1, 10);
-  if (i == 1) {
-    streetsArray[i].scale.set(10, 1, 25);
-    streetsArray[i].position.set(0, 0, 17.5);
-  }
-  scene.add(streetsArray[i]);
-}
+streetsArray[0] = streetBase1.clone();
+streetsArray[0].position.set(0, 0, 17.5);
+streetsArray[0].scale.set(10, 1, 25);
+streetsArray[1] = streetBase2.clone();
+streetsArray[1].position.set(0, 0, 0);
+streetsArray[1].scale.set(10, 1, 70);
+streetsArray[1].rotateY(Math.PI / 2);
+scene.add(streetsArray[0], streetsArray[1]); // streetsArray[0] = streetBase.clone();
+// for (let i = 0; i < 2; i++) {
+//     streetsArray[i] = streetBase.clone();
+//     streetsArray[i].scale.set(70, 1, 10)
+//     if (i == 1) {
+//         streetsArray[i].scale.set(10, 1, 25)
+//         streetsArray[i].position.set(0, 0, 17.5)
+//     }
+//     scene.add(streetsArray[i])
+// }
 "use strict";
 /* LAMP.JS */
 var lampBaseGeometry = new THREE.CylinderGeometry(1, 1, 7, 32);
@@ -493,10 +514,11 @@ renderer.render(scene, camera);
 /* animation settings */
 function animate() {
   requestAnimationFrame(animate); // dobre/przetestowane wartosci
-  daySpotLight.position.x = 100 * Math.sin(Date.now() / 4800);
-  daySpotLight.position.y = 100 * Math.cos(Date.now() / 4800);
-  nightSpotLight.position.x = -100 * Math.sin(Date.now() / 4800);
-  nightSpotLight.position.y = -100 * Math.cos(Date.now() / 4800); //
+  // daySpotLight.position.x = 100 * Math.sin(Date.now() / 4800)
+  // daySpotLight.position.y = 100 * Math.cos(Date.now() / 4800)
+  // nightSpotLight.position.x = -100 * Math.sin(Date.now() / 4800)
+  // nightSpotLight.position.y = -100 * Math.cos(Date.now() / 4800)
+  //
   //te raczej tez
   if (daySpotLight.position.y < 70 && daySpotLight.position.x > 0) {
     daySpotLight.intensity -= .002;

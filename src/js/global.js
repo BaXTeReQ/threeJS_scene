@@ -27,6 +27,8 @@ const controls = new THREE.OrbitControls(camera, renderer.domElement);
 /* add the output of the renderer to the html element */
 document.getElementById("WebGL-output").appendChild(renderer.domElement);
 
+/* texture loader */
+const textureLoader = new THREE.TextureLoader();
 
 /* day light */
 const daySpotLight = new THREE.SpotLight(0xfdfbd3, .5)
@@ -51,7 +53,7 @@ nightSpotLight.shadow.mapSize.width = 2048;
 nightSpotLight.shadow.mapSize.height = 2048;
 nightSpotLight.angle = Math.PI / 4;
 nightSpotLight.castShadow = true;
-scene.add(nightSpotLight);
+// scene.add(nightSpotLight);
 
 const nightSpotLightHelper = new THREE.SpotLightHelper(nightSpotLight);
 scene.add(nightSpotLightHelper)

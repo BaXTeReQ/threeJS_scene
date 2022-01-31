@@ -8,11 +8,11 @@ function animate() {
     requestAnimationFrame(animate);
 
     // dobre/przetestowane wartosci
-    daySpotLight.position.x = 100 * Math.sin(Date.now() / 4800)
-    daySpotLight.position.y = 100 * Math.cos(Date.now() / 4800)
+    // daySpotLight.position.x = 100 * Math.sin(Date.now() / 4800)
+    // daySpotLight.position.y = 100 * Math.cos(Date.now() / 4800)
 
-    nightSpotLight.position.x = -100 * Math.sin(Date.now() / 4800)
-    nightSpotLight.position.y = -100 * Math.cos(Date.now() / 4800)
+    // nightSpotLight.position.x = -100 * Math.sin(Date.now() / 4800)
+    // nightSpotLight.position.y = -100 * Math.cos(Date.now() / 4800)
     //
 
     //te raczej tez
