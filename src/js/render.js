@@ -3,20 +3,97 @@
 /* render scene */
 renderer.render(scene, camera);
 
-/* animation settings */
+/* animations */
 function animate() {
     requestAnimationFrame(animate);
 
     // dobre/przetestowane wartosci
-    // daySpotLight.position.x = 100 * Math.sin(Date.now() / 4800)
-    // daySpotLight.position.y = 100 * Math.cos(Date.now() / 4800)
+    daySpotLight.position.x = 100 * Math.sin(Date.now() / 4800)
+    daySpotLight.position.y = 100 * Math.cos(Date.now() / 4800)
 
-    // nightSpotLight.position.x = -100 * Math.sin(Date.now() / 4800)
-    // nightSpotLight.position.y = -100 * Math.cos(Date.now() / 4800)
+    nightSpotLight.position.x = -100 * Math.sin(Date.now() / 4800)
+    nightSpotLight.position.y = -100 * Math.cos(Date.now() / 4800)
     //
 
+    console.log(nightSpotLight.position.y)
+    console.log(nightSpotLight.intensity)
+
+
+
     //te raczej tez
-    // if (daySpotLight.position.y < 70 && daySpotLight.position.x > 0) {
+    if (daySpotLight.position.y < 50 && daySpotLight.position.x > 0) {
+        daySpotLight.intensity -= .0035
+        if (daySpotLight.intensity < .0009 || daySpotLight.position.y < 0) {
+            daySpotLight.intensity = 0
+        }        
+        // lanternsOn(daySpotLight.position.y);
+    }   
+    if (daySpotLight.position.y > 0 && daySpotLight.position.x < 0) {
+        daySpotLight.intensity += .0035
+        if (daySpotLight.intensity > .449) {
+            daySpotLight.intensity = .5
+        }
+        // lanternsOn(daySpotLight.position.y);
+    }        
+    if (nightSpotLight.position.y < 50 && nightSpotLight.position.x > 0) {
+        nightSpotLight.intensity -= .0035
+        if (nightSpotLight.intensity < .0009 || nightSpotLight.position.y < 0) {
+            nightSpotLight.intensity = 0
+        }        
+        // lanternsOn(daySpotLight.position.y);
+    }   
+    if (nightSpotLight.position.y > 0 && nightSpotLight.position.x < 0) {
+        nightSpotLight.intensity += .0035
+        if (nightSpotLight.intensity > .449) {
+            nightSpotLight.intensity = .5
+        }
+        // lanternsOn(daySpotLight.position.y);
+    }    
+    // if (nightSpotLight.position.y < 50 && nightSpotLight.position.x > 0) {
+    //     nightSpotLight.intensity -= .0035
+    //     if (nightSpotLight.intensity < .0009 && nightSpotLight.position.y < 0) {
+    //         nightSpotLight.intensity = 0
+    //     }        
+    //     // lanternsOn(daySpotLight.position.y);
+    // }   
+    // if (nightSpotLight.position.y > 0 && nightSpotLight.position.x < 0) {
+    //     nightSpotLight.intensity += .0035
+    //     if (nightSpotLight.intensity > .449 && nightSpotLight.position.y > 0) {
+    //         nightSpotLight.intensity = .5
+    //     }
+    //     // lanternsOn(daySpotLight.position.y);
+    // }
+    // if (daySpotLight.position.y > -20 && daySpotLight.position.x < 0) {
+    //     daySpotLight.intensity += .002
+    //     if (daySpotLight.intensity > .499) {
+    //         daySpotLight.intensity = .5
+    //     }
+    //     // lanternsOff(daySpotLight.position.y);
+    // }
+    // if (daySpotLight.position.y < -10)
+    //     daySpotLight.intensity = 0     
+    
+    // if (nightSpotLight.position.y < 70 && nightSpotLight.position.x > 0) {
+    //     nightSpotLight.intensity -= .001
+    //     if (nightSpotLight.intensity < .0009 || nightSpotLight.position.y < -20) {
+    //         nightSpotLight.intensity = 0
+    //     }
+    // }
+    // if (nightSpotLight.position.y > -20 && nightSpotLight.position.x < 0) {
+    //     nightSpotLight.intensity += .001
+    //     if (nightSpotLight.intensity > .249) {
+    //         nightSpotLight.intensity = .25
+    //     }
+    // }
+    // if (nightSpotLight.position.y < -10)
+    //     nightSpotLight.intensity = 0      
+        
+        
+
+
+
+
+    //     if (daySpotLight.position.y < 70 && daySpotLight.position.x > 0) {
     //     daySpotLight.intensity -= .002
     //     if (daySpotLight.intensity < .0009 || daySpotLight.position.y < -20) {
     //         daySpotLight.intensity = 0
@@ -47,7 +124,7 @@ function animate() {
     // }
     // if (nightSpotLight.position.y < -10)
     //     nightSpotLight.intensity = 0    
-    //
+    // //
     
         
         
@@ -148,6 +225,7 @@ function animate() {
     renderer.render(scene, camera);
 }
 
+/* lanterns on day */
 function lanternsOff(y){
     lanternsBulbsArray.forEach(e => {
         if(e.intensity <= .01225 || y > 10) e.intensity = 0
@@ -167,6 +245,7 @@ function lanternsOff(y){
     // });
 }
 
+/* lanterns on night */
 function lanternsOn(y){
     lanternsBulbsArray.forEach(e => {
         if(e.intensity >= .84 || y < -20) e.intensity = .85
