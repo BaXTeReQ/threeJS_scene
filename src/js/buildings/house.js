@@ -79,7 +79,7 @@ const roofBase = [
     new THREE.Mesh(roofGeometry, roofMaterials[3]),
 ]
 
-/* receiving and casting shadows */
+/* shadows */
 houseBase.forEach(e => {
     e.castShadow = true
     e.receiveShadow = true
