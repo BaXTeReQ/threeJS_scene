@@ -16,37 +16,37 @@ function animate() {
     //
 
     //te raczej tez
-    if (daySpotLight.position.y < 70 && daySpotLight.position.x > 0) {
-        daySpotLight.intensity -= .002
-        if (daySpotLight.intensity < .0009 || daySpotLight.position.y < -20) {
-            daySpotLight.intensity = 0
-        }
-        lanternsOn(daySpotLight.position.y);
-    }
-    if (daySpotLight.position.y > -20 && daySpotLight.position.x < 0) {
-        daySpotLight.intensity += .002
-        if (daySpotLight.intensity > .499) {
-            daySpotLight.intensity = .5
-        }
-        lanternsOff(daySpotLight.position.y);
-    }
-    if (daySpotLight.position.y < -10)
-        daySpotLight.intensity = 0     
+    // if (daySpotLight.position.y < 70 && daySpotLight.position.x > 0) {
+    //     daySpotLight.intensity -= .002
+    //     if (daySpotLight.intensity < .0009 || daySpotLight.position.y < -20) {
+    //         daySpotLight.intensity = 0
+    //     }
+    //     // lanternsOn(daySpotLight.position.y);
+    // }
+    // if (daySpotLight.position.y > -20 && daySpotLight.position.x < 0) {
+    //     daySpotLight.intensity += .002
+    //     if (daySpotLight.intensity > .499) {
+    //         daySpotLight.intensity = .5
+    //     }
+    //     // lanternsOff(daySpotLight.position.y);
+    // }
+    // if (daySpotLight.position.y < -10)
+    //     daySpotLight.intensity = 0     
     
-    if (nightSpotLight.position.y < 70 && nightSpotLight.position.x > 0) {
-        nightSpotLight.intensity -= .001
-        if (nightSpotLight.intensity < .0009 || nightSpotLight.position.y < -20) {
-            nightSpotLight.intensity = 0
-        }
-    }
-    if (nightSpotLight.position.y > -20 && nightSpotLight.position.x < 0) {
-        nightSpotLight.intensity += .001
-        if (nightSpotLight.intensity > .249) {
-            nightSpotLight.intensity = .25
-        }
-    }
-    if (nightSpotLight.position.y < -10)
-        nightSpotLight.intensity = 0    
+    // if (nightSpotLight.position.y < 70 && nightSpotLight.position.x > 0) {
+    //     nightSpotLight.intensity -= .001
+    //     if (nightSpotLight.intensity < .0009 || nightSpotLight.position.y < -20) {
+    //         nightSpotLight.intensity = 0
+    //     }
+    // }
+    // if (nightSpotLight.position.y > -20 && nightSpotLight.position.x < 0) {
+    //     nightSpotLight.intensity += .001
+    //     if (nightSpotLight.intensity > .249) {
+    //         nightSpotLight.intensity = .25
+    //     }
+    // }
+    // if (nightSpotLight.position.y < -10)
+    //     nightSpotLight.intensity = 0    
     //
     
         
