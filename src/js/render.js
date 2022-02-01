@@ -7,91 +7,66 @@ renderer.render(scene, camera);
 function animate() {
     requestAnimationFrame(animate);
 
-    // dobre/przetestowane wartosci
+    /* moving day and night lights */
     daySpotLight.position.x = 100 * Math.sin(Date.now() / 4800)
     daySpotLight.position.y = 100 * Math.cos(Date.now() / 4800)
 
     nightSpotLight.position.x = -100 * Math.sin(Date.now() / 4800)
     nightSpotLight.position.y = -100 * Math.cos(Date.now() / 4800)
-    //
 
-    console.log(nightSpotLight.position.y)
-    console.log(nightSpotLight.intensity)
-
-
-
-    //te raczej tez
+    /* changing lights intensity */
     if (daySpotLight.position.y < 50 && daySpotLight.position.x > 0) {
         daySpotLight.intensity -= .0035
         if (daySpotLight.intensity < .0009 || daySpotLight.position.y < 0) {
             daySpotLight.intensity = 0
         }        
-        // lanternsOn(daySpotLight.position.y);
     }   
     if (daySpotLight.position.y > 0 && daySpotLight.position.x < 0) {
         daySpotLight.intensity += .0035
         if (daySpotLight.intensity > .449) {
             daySpotLight.intensity = .5
         }
-        // lanternsOn(daySpotLight.position.y);
-    }        
+    }     
+    
     if (nightSpotLight.position.y < 50 && nightSpotLight.position.x > 0) {
         nightSpotLight.intensity -= .0035
         if (nightSpotLight.intensity < .0009 || nightSpotLight.position.y < 0) {
             nightSpotLight.intensity = 0
         }        
-        // lanternsOn(daySpotLight.position.y);
     }   
     if (nightSpotLight.position.y > 0 && nightSpotLight.position.x < 0) {
         nightSpotLight.intensity += .0035
         if (nightSpotLight.intensity > .449) {
             nightSpotLight.intensity = .5
         }
-        // lanternsOn(daySpotLight.position.y);
     }    
-        
+
+    /* animation for lanterns */
+    lanternLightsArray.forEach(e => {
+        if(daySpotLight.position.y > 20 && daySpotLight.position.x < 0)
+            e.intensity -= .025
+        if(e.intensity <= 0 || daySpotLight.position.y >= 40) 
+            e.intensity = 0
+        if(daySpotLight.position.y < 20 && daySpotLight.position.x > 0)
+            e.intensity += .025
+        if(e.intensity >= .8 || daySpotLight.position.y <= 0) 
+            e.intensity = .8
+    });    
+    lanternArray.forEach(e => {
+        if(daySpotLight.position.y > 20 && daySpotLight.position.x < 0)
+            e.children[3].material.opacity -= .02225
+        if(e.children[3].material.opacity <= .1 || daySpotLight.position.y >= 30) 
+            e.children[3].material.opacity = .1
+        if(daySpotLight.position.y < 20 && daySpotLight.position.x > 0)
+            e.children[3].material.opacity += .02225
+        if(e.children[3].material.opacity >= .9 || daySpotLight.position.y <= 10) 
+            e.children[3].material.opacity = .9
+    });
+
+
+
     controls.update();
     renderer.render(scene, camera);
-}
-
-/* lanterns on day */
-function lanternsOff(y){
-    lanternsBulbsArray.forEach(e => {
-        if(e.intensity <= .01225 || y > 10) e.intensity = 0
-        else e.intensity -= .01225;
-    });
-    lanternsArray.forEach(e => {
-        if(e.children[3].material.opacity <= .1) e.children[3].material.opacity = .1;
-        else e.children[3].material.opacity -= .00225;
-        //if(f.material.opacity >= 1) f.material.opacity = 1
-        //else f.material.opacity += .05;
-    });
-    // lanternsArray.forEach(e => {
-    //     e.children.forEach(f => {
-    //         if(f.material.opacity <= .15) f.material.opacity = .1
-    //         else f.material.opacity -= .05;
-    //     });
-    // });
-}
-
-/* lanterns on night */
-function lanternsOn(y){
-    lanternsBulbsArray.forEach(e => {
-        if(e.intensity >= .84 || y < -20) e.intensity = .85
-        else e.intensity += .01225;
-    });
-    lanternsArray.forEach(e => {
-        if(e.children[3].material.opacity >= 1) e.children[3].material.opacity = 1;
-        else e.children[3].material.opacity += .00225;
-        //if(f.material.opacity >= 1) f.material.opacity = 1
-        //else f.material.opacity += .05;
-    });
-    // lanternsArray.forEach(e => {
-    //     e.children.forEach(f => {
-    //         if(f.material.opacity >= 1) f.material.opacity = 1
-    //         else f.material.opacity += .05;
-    //     });
-    // });
 }
 
 animate();
