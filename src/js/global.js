@@ -39,6 +39,7 @@ daySpotLight.angle = Math.PI / 4;
 daySpotLight.castShadow = true;
 scene.add(daySpotLight);
 
+/* day light helper */
 const daySpotLightHelper = new THREE.SpotLightHelper(daySpotLight);
 scene.add(daySpotLightHelper)
 
@@ -53,11 +54,8 @@ nightSpotLight.shadow.mapSize.width = 2048;
 nightSpotLight.shadow.mapSize.height = 2048;
 nightSpotLight.angle = Math.PI / 4;
 nightSpotLight.castShadow = true;
-// scene.add(nightSpotLight);
+scene.add(nightSpotLight);
 
+/* night light helper */
 const nightSpotLightHelper = new THREE.SpotLightHelper(nightSpotLight);
 scene.add(nightSpotLightHelper)
-
-/* add ambient light for better effect */
-// const nightAmbientLight = new THREE.AmbientLight(0x000000);
-// scene.add(nightAmbientLight)
