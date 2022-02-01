@@ -1,35 +1,44 @@
 /* SIDEWALK.JS */
 
-/* base sidewalk object */
+/* geometry */
 const sidewalkGeometry = new THREE.BoxGeometry(1, 0.1, 1);
+
+/* material */
 const sidewalkMaterial = new THREE.MeshStandardMaterial({ color: 0xf7f1e3 });
+
+/* base obejct */
 const sidewalkBase = new THREE.Mesh(sidewalkGeometry, sidewalkMaterial);
+
+/* shadows */
 sidewalkBase.receiveShadow = true;
+// sidewalkBase.receiveShadow = true;
 
-/* Array for sidewalks */
-const sidewalksArray = new Array();
+/* sidewalks objects */
+const sidewalk0 = sidewalkBase.clone()
+const sidewalk1 = sidewalkBase.clone()
+const sidewalk2 = sidewalkBase.clone()
+const sidewalk3 = sidewalkBase.clone()
+const sidewalk4 = sidewalkBase.clone()
+const sidewalk5 = sidewalkBase.clone()
+const sidewalk6 = sidewalkBase.clone()
 
-for (let i = 0; i < 7; i++) {
-    /* cloning base sidewalk */
-    sidewalksArray[i] = sidewalkBase.clone();
-    /* sidewalks close to houses */
-    if (i < 4) {
-        sidewalksArray[i].scale.set(20, 2, 5)
-        sidewalksArray[i].rotateY(Math.PI / 2)
-        if (i < 2) {
-            sidewalksArray[i].position.set(7.5 * Math.pow(-1, i), .05, 20)
-        } else {
-            sidewalksArray[i].position.set(12.5 * Math.pow(-1, i), .05, -20)
-        }
-        /* main long sidewalk */
-    } else if (i > 5) {
-        sidewalksArray[i].scale.set(70, 2, 5)
-        sidewalksArray[i].position.set(0, 0.05, -7.5)
-        /* other main sidewalks */
-    } else {
-        sidewalksArray[i].scale.set(30, 2, 5)
-        sidewalksArray[i].position.set(20 * Math.pow(-1, i), .05, 7.5)
-    }
-    /* adding all sidewalks to scene */
-    scene.add(sidewalksArray[i])
-}
+/* positions */
+sidewalk0.position.set(12.5, .05, -20)
+sidewalk1.position.set(-12.5, .05, -20)
+sidewalk2.position.set(7.5, .05, 20)
+sidewalk3.position.set(-7.5, .05, 20)
+sidewalk4.position.set(0, .05, -7.5)
+sidewalk5.position.set(20, .05, 7.5)
+sidewalk6.position.set(-20, .05, 7.5)
+
+/* scales */
+sidewalk0.scale.set(5, 2, 20)
+sidewalk1.scale.set(5, 2, 20)
+sidewalk2.scale.set(5, 2, 20)
+sidewalk3.scale.set(5, 2, 20)
+sidewalk4.scale.set(70, 2, 5)
+sidewalk5.scale.set(30, 2, 5)
+sidewalk6.scale.set(30, 2, 5)
+
+/* adding to scene */
+scene.add(sidewalk0, sidewalk1, sidewalk2, sidewalk3, sidewalk4, sidewalk5, sidewalk6)
