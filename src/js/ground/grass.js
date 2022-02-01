@@ -1,23 +1,37 @@
 /* GRASS.JS */
 
+/* geometry */
 const grassGeometry = new THREE.BoxGeometry(1, 0.1, 1);
+
+/* material */
 const grassMaterial = new THREE.MeshStandardMaterial({ color: 0x27ae60 });
+
+/* base obejct */
 const grassBase = new THREE.Mesh(grassGeometry, grassMaterial);
+
+/* shadows */
 grassBase.receiveShadow = true;
 
-const grassArray = new Array();
+/* grass objects */
+const grass0 = grassBase.clone()
+const grass1 = grassBase.clone()
+const grass2 = grassBase.clone()
+const grass3 = grassBase.clone()
+const grass4 = grassBase.clone()
 
-for (let i = 0; i < 5; i++) {
-    grassArray[i] = grassBase.clone();
-    if (i < 2) {
-        grassArray[i].scale.set(25, 1, 20)
-        grassArray[i].position.set(22.5, 0, 20)
-        if (i % 2 != 0)
-            grassArray[i].position.set(-22.5, 0, 20)
-    }
-    else {
-        grassArray[i].scale.set(20, 1, 20)
-        grassArray[i].position.set(i * -25 + 75, 0, -20)
-    }
-    scene.add(grassArray[i])
-}
+/* positions */
+grass0.position.set(22.5, 0, 20)
+grass1.position.set(-22.5, 0, 20)
+grass2.position.set(25, 0, -20)
+grass3.position.set(0, 0, -20)
+grass4.position.set(-25, 0, -20)
+
+/* scales */
+grass0.scale.set(25, 1, 20)
+grass1.scale.set(25, 1, 20)
+grass2.scale.set(20, 1, 20)
+grass3.scale.set(20, 1, 20)
+grass4.scale.set(20, 1, 20)
+
+/* adding to scene */
+scene.add(grass0, grass1, grass2, grass3, grass4)
