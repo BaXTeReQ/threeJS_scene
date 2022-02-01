@@ -29,15 +29,15 @@ function animate() {
     }     
     
     if (nightSpotLight.position.y < 50 && nightSpotLight.position.x > 0) {
-        nightSpotLight.intensity -= .0035
+        nightSpotLight.intensity -= .00175
         if (nightSpotLight.intensity < .0009 || nightSpotLight.position.y < 0) {
             nightSpotLight.intensity = 0
         }        
     }   
     if (nightSpotLight.position.y > 0 && nightSpotLight.position.x < 0) {
-        nightSpotLight.intensity += .0035
-        if (nightSpotLight.intensity > .449) {
-            nightSpotLight.intensity = .5
+        nightSpotLight.intensity += .00175
+        if (nightSpotLight.intensity > .249) {
+            nightSpotLight.intensity = .25
         }
     }    
 
@@ -62,7 +62,6 @@ function animate() {
         if(e.children[3].material.opacity >= .9 || daySpotLight.position.y <= 10) 
             e.children[3].material.opacity = .9
     });
-
 
 
     controls.update();

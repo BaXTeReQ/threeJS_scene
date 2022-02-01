@@ -11,7 +11,7 @@ const lanternGeometry = [
 /* material */
 const lanternMaterials = [
     /* base */new THREE.MeshStandardMaterial({ color: 0x95a5a6 }),
-    /* light */new THREE.MeshBasicMaterial({ color: 0xffffff, opacity: .9 /*do zmiany miedzy dniem a noca opacity: .1*/, transparent: true })
+    /* light */new THREE.MeshBasicMaterial({ color: 0xffffff, opacity: .9, transparent: true })
 ]
 
 /* elements for lantern */
@@ -39,7 +39,7 @@ lanternElements.forEach(e => {
 });
 
 /* light for lanterns */
-const lanternLight = new THREE.SpotLight(0xffffff, .75, 0, Math.PI / 5, 1, 1);
+const lanternLight = new THREE.SpotLight(0xffffff, .8, 0, Math.PI / 5, 1, 1);
 
 /* shadow casting for light */
 lanternLight.castShadow = true;
@@ -105,6 +105,17 @@ lantern1.rotateY(Math.PI)
 lantern2.rotateY(Math.PI)
 lantern6.rotateY(-Math.PI / 2)
 lantern7.rotateY(Math.PI / 2)
+
+/* array for lantern lights */
+const lanternLightsArray = [
+    lanternLight0, lanternLight1, lanternLight2, lanternLight3,
+    lanternLight4, lanternLight5, lanternLight6, lanternLight7
+]
+
+/* array for lantern light materials */
+const lanternArray = [
+    lantern0, lantern1, lantern2, lantern3, lantern4, lantern5, lantern6, lantern7
+]
 
 /* adding to scene */
 scene.add(
