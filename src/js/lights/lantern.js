@@ -1,70 +1,114 @@
-/* LANTERN.JS */
+// /* LANTERN.JS */
 
-const lanternBottomGeometry = new THREE.CylinderGeometry(2, 5, 20, 32);
-const lanternBaseGeometry = new THREE.CylinderGeometry(1.5, 1.5, 100, 32);
-const lanternUpperGeometry = new THREE.BoxGeometry(7.5, 2, 12.5);
-const lanternMaterial = new THREE.MeshStandardMaterial({ color: 0x95a5a6 });
-const lanternBottom = new THREE.Mesh(lanternBottomGeometry, lanternMaterial);
-const lanternBase = new THREE.Mesh(lanternBaseGeometry, lanternMaterial);
-const lanternUpper = new THREE.Mesh(lanternUpperGeometry, lanternMaterial);
+/* geometry */
+const lanternGeometry = [
+    /* bottom */new THREE.CylinderGeometry(2, 5, 20, 32),
+    /* base */new THREE.CylinderGeometry(1.5, 1.5, 100, 32),
+    /* upper */new THREE.BoxGeometry(7.5, 2, 12.5),
+    /* light */new THREE.BoxGeometry(4, 1, 9)
+]
 
-lanternBottom.position.set(0, 1, 0)
-lanternBase.position.set(0, 45, 0)
-lanternUpper.position.set(0, 96, -5)
-lanternUpper.rotateX(Math.PI / 10)
+/* material */
+const lanternMaterials = [
+    /* base */new THREE.MeshStandardMaterial({ color: 0x95a5a6 }),
+    /* light */new THREE.MeshBasicMaterial({ color: 0xffffff, opacity: .9 /*do zmiany miedzy dniem a noca opacity: .1*/, transparent: true })
+]
 
-/* making light for lanterns */
-const lanternBulb = new THREE.SpotLight(0xffffff, .85, 0, Math.PI / 4, 1, 1);
-lanternBulb.castShadow = true;
+/* elements for lantern */
+const lanternElements = [
+    /* bottom */new THREE.Mesh(lanternGeometry[0], lanternMaterials[0]),
+    /* base */new THREE.Mesh(lanternGeometry[1], lanternMaterials[0]),
+    /* upper */new THREE.Mesh(lanternGeometry[2], lanternMaterials[0]),
+    /* light */new THREE.Mesh(lanternGeometry[3], lanternMaterials[1])
+]
 
-const lanternLightGeometry = new THREE.BoxGeometry(4, 1, 9);
-const lanternLightMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, opacity: .5 /*do zmiany miedzy dniem a noca opacity: .5*/, transparent: true });
-const lanternLight = new THREE.Mesh(lanternLightGeometry, lanternLightMaterial);
-lanternLight.position.set(0, 95, -5)
-lanternLight.rotateX(Math.PI / 10)
+/* positions for lantern elements */
+lanternElements[0].position.set(0, 1, 0)
+lanternElements[1].position.set(0, 45, 0)
+lanternElements[2].position.set(0, 96, -5)
+lanternElements[3].position.set(0, 95, -6)
 
-lanternSingle.add(lanternBottom, lanternBase, lanternUpper, lanternLight);
+/* rotation for lantern element */
+lanternElements[2].rotateX(Math.PI / 10)
+lanternElements[3].rotateX(Math.PI / 10)
 
-const lanternsArray = new Array();
-const lanternsBulbsArray = new Array();
+/* shadows for elements */
+lanternElements.forEach(e => {
+    e.castShadow = true
+    e.receiveShadow = true
+});
 
-for (let i = 0; i < 8; i++) {
-    lanternsArray[i] = lanternSingle.clone();
-    lanternsArray[i].scale.set(.075, .075, .075)
-    lanternsBulbsArray[i] = lanternBulb.clone();
-    for (let j = 0; j < 3; j++) {
-        lanternsArray[i].children[j].castShadow = true
-        lanternsArray[i].children[j].receiveShadow = true
-    }
-    if (i < 6) {
-        if (i % 2 == 0) {
-            lanternsArray[i].position.set(30 - i * 10, .8, 7.5)
-            lanternsBulbsArray[i].position.set(30 - i * 10, 8, 7.3)
-            lanternsBulbsArray[i].target.position.set(30 - i * 10, 0, 2.3)
-        } else {
-            lanternsArray[i].position.set(30 - i * 10, .8, -7.5)
-            lanternsArray[i].rotateY(Math.PI);
-            lanternsBulbsArray[i].position.set(30 - i * 10, 8, -7.3)
-            lanternsBulbsArray[i].target.position.set(30 - i * 10, 0, -2.3)
-        }
-        if (i > 2){
-            lanternsArray[i].translateX(10)
-            lanternsBulbsArray[i].translateX(-10)            
-            lanternsBulbsArray[i].target.translateX(-10)            
-        }
-        if (i == 4) {
-            lanternsArray[i].position.set(-20, .8, 7.5)
-        }
-    } else if (i == 7){
-        lanternsArray[i].rotateY(Math.PI/2);
-        lanternsArray[i].position.set(7.5, .8, 25)
-        lanternsBulbsArray[i].position.set(7.3, 8, 25)
-        lanternsBulbsArray[i].target.position.set(2.3, 0, 25)
-    } else {
-        lanternsArray[i].rotateY(-Math.PI * Math.pow(-1, i) / 2);
-        lanternsArray[i].position.set(-7.5, .8, 15)
-        lanternsBulbsArray[i].position.set(-7.3, 8, 15)
-        lanternsBulbsArray[i].target.position.set(-2.3, 0, 15)
-    }
-    scene.add(lanternsArray[i], lanternsBulbsArray[i], lanternsBulbsArray[i].target)
-}
+/* light for lanterns */
+const lanternLight = new THREE.SpotLight(0xffffff, .75, 0, Math.PI / 5, 1, 1);
+
+/* shadow casting for light */
+lanternLight.castShadow = true;
+
+/* group for lantern elements */
+const lanternSingle = new THREE.Group()
+lanternSingle.add(lanternElements[0], lanternElements[1], lanternElements[2], lanternElements[3]);
+
+/* scale for group */
+lanternSingle.scale.set(.075, .075, .075)
+
+/* lantern objects */
+const lantern0 = lanternSingle.clone()
+const lantern1 = lanternSingle.clone()
+const lantern2 = lanternSingle.clone()
+const lantern3 = lanternSingle.clone()
+const lantern4 = lanternSingle.clone()
+const lantern5 = lanternSingle.clone()
+const lantern6 = lanternSingle.clone()
+const lantern7 = lanternSingle.clone()
+
+/* lights for lanterns */
+const lanternLight0 = lanternLight.clone()
+const lanternLight1 = lanternLight.clone()
+const lanternLight2 = lanternLight.clone()
+const lanternLight3 = lanternLight.clone()
+const lanternLight4 = lanternLight.clone()
+const lanternLight5 = lanternLight.clone()
+const lanternLight6 = lanternLight.clone()
+const lanternLight7 = lanternLight.clone()
+
+/* positions */
+lantern0.position.set(30, .8, -7.5)
+lantern1.position.set(10, .8, -7.5)
+lantern2.position.set(-20, .8, -7.5)
+lantern3.position.set(20, .8, 7.5)
+lantern4.position.set(-10, .8, 7.5)
+lantern5.position.set(-30, .8, 7.5)
+lantern6.position.set(-7.5, .8, 15)
+lantern7.position.set(7.5, .8, 25)
+
+lanternLight0.position.set(30, 8, -7.3)
+lanternLight1.position.set(10, 8, -7.3)
+lanternLight2.position.set(-20, 8, -7.3)
+lanternLight3.position.set(20, 8, 7.3)
+lanternLight4.position.set(-10, 8, 7.3)
+lanternLight5.position.set(-30, 8, 7.3)
+lanternLight6.position.set(-7.3, 8, 15)
+lanternLight7.position.set(7.3, 8, 25)
+
+lanternLight0.target.position.set(30, 2, -2.5)
+lanternLight1.target.position.set(10, 2, -2.5)
+lanternLight2.target.position.set(-20, 2, -2.5)
+lanternLight3.target.position.set(20, 2, 2.5)
+lanternLight4.target.position.set(-10, 2, 2.5)
+lanternLight5.target.position.set(-30, 2, 2.5)
+lanternLight6.target.position.set(-2.5, 2, 15)
+lanternLight7.target.position.set(2.5, 2, 25)
+
+/* rotations */
+lantern0.rotateY(Math.PI)
+lantern1.rotateY(Math.PI)
+lantern2.rotateY(Math.PI)
+lantern6.rotateY(-Math.PI / 2)
+lantern7.rotateY(Math.PI / 2)
+
+/* adding to scene */
+scene.add(
+    lantern0, lantern1, lantern2, lantern3, lantern4, lantern5, lantern6, lantern7, 
+    lanternLight0, lanternLight1, lanternLight2, lanternLight3, lanternLight4, lanternLight5, lanternLight6, lanternLight7,
+    lanternLight0.target, lanternLight1.target, lanternLight2.target, lanternLight3.target, lanternLight4.target, lanternLight5.target, lanternLight6.target, lanternLight7.target 
+)
