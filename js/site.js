@@ -87,15 +87,25 @@ scene.add(grass0, grass1, grass2, grass3, grass4);
 /* geometry */
 var postGeometry = new THREE.CylinderGeometry(1, 1, 7, 32);
 /* materials */
-var postMaterials = [new THREE.MeshStandardMaterial({
+var postMaterials = [
+/* main and upper */
+new THREE.MeshStandardMaterial({
   color: 0x95a5a6
-}), new THREE.MeshStandardMaterial({
+}),
+/* transparent */
+new THREE.MeshStandardMaterial({
   color: 0xffffff,
   opacity: .5,
   transparent: true
 })];
 /* elements for post */
-var postElements = [new THREE.Mesh(postGeometry, postMaterials[0]), new THREE.Mesh(postGeometry, postMaterials[1]), new THREE.Mesh(postGeometry, postMaterials[0])];
+var postElements = [
+/* main */
+new THREE.Mesh(postGeometry, postMaterials[0]),
+/* transparent */
+new THREE.Mesh(postGeometry, postMaterials[1]),
+/* upper */
+new THREE.Mesh(postGeometry, postMaterials[0])];
 /* positions for post elements */
 postElements[0].position.set(0, 0, 0);
 postElements[1].position.set(0, 4.2, 0);
@@ -170,15 +180,23 @@ scene.add(sidewalk0, sidewalk1, sidewalk2, sidewalk3, sidewalk4, sidewalk5, side
 "use strict";
 //STREET.JS
 /* textures */
-var roadTextures = [textureLoader.load('../ProjektGrafika/textures/road1.png'), textureLoader.load('../ProjektGrafika/textures/road2.png')];
+var roadTextures = [
+/* side Road */
+textureLoader.load('../ProjektGrafika/textures/road1.png'),
+/* main Road */
+textureLoader.load('../ProjektGrafika/textures/road2.png')];
 /* geometry */
 var streetGeometry = new THREE.BoxGeometry(1, 0.1, 1);
 /* materials */
-var streetMaterials = [new THREE.MeshStandardMaterial({
+var streetMaterials = [
+/* side Road */
+new THREE.MeshStandardMaterial({
   color: 0xffffff,
   map: roadTextures[0],
   side: THREE.DoubleSide
-}), new THREE.MeshStandardMaterial({
+}),
+/* main Road */
+new THREE.MeshStandardMaterial({
   color: 0xffffff,
   map: roadTextures[1],
   side: THREE.DoubleSide

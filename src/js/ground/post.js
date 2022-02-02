@@ -5,15 +5,15 @@ const postGeometry = new THREE.CylinderGeometry(1, 1, 7, 32);
 
 /* materials */
 const postMaterials = [
-    new THREE.MeshStandardMaterial({ color: 0x95a5a6 }),
-    new THREE.MeshStandardMaterial({ color: 0xffffff, opacity: .5, transparent: true })
+    /* main and upper */new THREE.MeshStandardMaterial({ color: 0x95a5a6 }),
+    /* transparent */new THREE.MeshStandardMaterial({ color: 0xffffff, opacity: .5, transparent: true })
 ]
 
 /* elements for post */
 const postElements = [
-    new THREE.Mesh(postGeometry, postMaterials[0]),
-    new THREE.Mesh(postGeometry, postMaterials[1]),
-    new THREE.Mesh(postGeometry, postMaterials[0])
+    /* main */new THREE.Mesh(postGeometry, postMaterials[0]),
+    /* transparent */new THREE.Mesh(postGeometry, postMaterials[1]),
+    /* upper */new THREE.Mesh(postGeometry, postMaterials[0])
 ]
 
 /* positions for post elements */

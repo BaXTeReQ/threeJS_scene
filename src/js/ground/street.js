@@ -2,8 +2,8 @@
 
 /* textures */
 const roadTextures = [
-    textureLoader.load('../ProjektGrafika/textures/road1.png'),
-    textureLoader.load('../ProjektGrafika/textures/road2.png')
+    /* side Road */textureLoader.load('../ProjektGrafika/textures/road1.png'),
+    /* main Road */textureLoader.load('../ProjektGrafika/textures/road2.png')
 ]
 
 /* geometry */
@@ -11,8 +11,8 @@ const streetGeometry = new THREE.BoxGeometry(1, 0.1, 1);
 
 /* materials */
 const streetMaterials = [
-    new THREE.MeshStandardMaterial({color: 0xffffff, map: roadTextures[0], side: THREE.DoubleSide}),
-    new THREE.MeshStandardMaterial({color: 0xffffff, map: roadTextures[1], side: THREE.DoubleSide})
+    /* side Road */new THREE.MeshStandardMaterial({color: 0xffffff, map: roadTextures[0], side: THREE.DoubleSide}),
+    /* main Road */new THREE.MeshStandardMaterial({color: 0xffffff, map: roadTextures[1], side: THREE.DoubleSide})
 ]
 
 /* objects */
