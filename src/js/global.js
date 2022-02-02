@@ -8,16 +8,11 @@ const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerH
 
 /* position and point the camera to the center of the scene */
 camera.position.set(35, 35, -35);
-// camera.position.set(15, 15, -15)
-// camera.position.set(5, 5, 15)
 
-/* create a render and set the size */
+/* create a render, set size, set shadows */
 const renderer = new THREE.WebGLRenderer();
-
-// renderer.setClearColor(new THREE.Color(0xdddddd));
 renderer.setClearColor(new THREE.Color(0x222222));
 renderer.setSize(window.innerWidth, window.innerHeight);
-
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
@@ -59,3 +54,15 @@ scene.add(nightSpotLight);
 /* night light helper */
 // const nightSpotLightHelper = new THREE.SpotLightHelper(nightSpotLight);
 // scene.add(nightSpotLightHelper)
+
+// redraw in case of window's size change
+window.addEventListener(
+    'resize',
+    function() {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize( window.innerWidth, window.innerHeight );
+      renderer.render( scene, camera );
+    },
+    false
+);

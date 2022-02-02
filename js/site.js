@@ -5,10 +5,9 @@ var scene = new THREE.Scene();
 /* create a camera, which defines where we're looking at. */
 var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
 /* position and point the camera to the center of the scene */
-camera.position.set(35, 35, -35); // camera.position.set(15, 15, -15)
-// camera.position.set(5, 5, 15)
-/* create a render and set the size */
-var renderer = new THREE.WebGLRenderer(); // renderer.setClearColor(new THREE.Color(0xdddddd));
+camera.position.set(35, 35, -35);
+/* create a render, set size, set shadows */
+var renderer = new THREE.WebGLRenderer();
 renderer.setClearColor(new THREE.Color(0x222222));
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true;
@@ -44,6 +43,13 @@ scene.add(nightSpotLight);
 /* night light helper */
 // const nightSpotLightHelper = new THREE.SpotLightHelper(nightSpotLight);
 // scene.add(nightSpotLightHelper)
+// redraw in case of window's size change
+window.addEventListener('resize', function () {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.render(scene, camera);
+}, false);
 "use strict";
 /* GRASS.JS */
 /* geometry */
