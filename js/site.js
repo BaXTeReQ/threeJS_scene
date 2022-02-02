@@ -28,8 +28,8 @@ daySpotLight.angle = Math.PI / 4;
 daySpotLight.castShadow = true;
 scene.add(daySpotLight);
 /* day light helper */
-var daySpotLightHelper = new THREE.SpotLightHelper(daySpotLight);
-scene.add(daySpotLightHelper);
+// const daySpotLightHelper = new THREE.SpotLightHelper(daySpotLight);
+// scene.add(daySpotLightHelper)
 /* add ambient light for better effect */
 var ambientLight = new THREE.AmbientLight(0x494949, .5);
 scene.add(ambientLight);
@@ -42,8 +42,8 @@ nightSpotLight.angle = Math.PI / 4;
 nightSpotLight.castShadow = true;
 scene.add(nightSpotLight);
 /* night light helper */
-var nightSpotLightHelper = new THREE.SpotLightHelper(nightSpotLight);
-scene.add(nightSpotLightHelper);
+// const nightSpotLightHelper = new THREE.SpotLightHelper(nightSpotLight);
+// scene.add(nightSpotLightHelper)
 "use strict";
 /* GRASS.JS */
 /* geometry */

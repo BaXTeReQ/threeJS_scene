@@ -40,8 +40,8 @@ daySpotLight.castShadow = true;
 scene.add(daySpotLight);
 
 /* day light helper */
-const daySpotLightHelper = new THREE.SpotLightHelper(daySpotLight);
-scene.add(daySpotLightHelper)
+// const daySpotLightHelper = new THREE.SpotLightHelper(daySpotLight);
+// scene.add(daySpotLightHelper)
 
 /* add ambient light for better effect */
 const ambientLight = new THREE.AmbientLight(0x494949, .5);
@@ -57,5 +57,5 @@ nightSpotLight.castShadow = true;
 scene.add(nightSpotLight);
 
 /* night light helper */
-const nightSpotLightHelper = new THREE.SpotLightHelper(nightSpotLight);
-scene.add(nightSpotLightHelper)
+// const nightSpotLightHelper = new THREE.SpotLightHelper(nightSpotLight);
+// scene.add(nightSpotLightHelper)
