@@ -648,22 +648,34 @@ house3.position.set(25, 2.5, 20);
 /* adding to scene */
 scene.add(house0, house1, house2, house3);
 "use strict";
-function camera1() {
-  camera.position.set(39, 4, 11);
+/*  CAMERASWITCH.JS */
+/* buttons */
+var btn1 = document.getElementById('btn1');
+var btn2 = document.getElementById('btn2');
+var btn3 = document.getElementById('btn3');
+var btn4 = document.getElementById('btn4');
+var btn5 = document.getElementById('btn5');
+/* events */
+btn1.addEventListener('click', function () {
+  camera.position.set(39, 6, 11);
   controls.target.set(-25, 3, -23);
-}
-function camera2() {
-  camera.position.set(15, 4, -23);
+});
+btn2.addEventListener('click', function () {
+  camera.position.set(25, 10, -26);
   controls.target.set(5, 3, -10);
-}
-function camera3() {
+});
+btn3.addEventListener('click', function () {
   camera.position.set(-14, 3, 31);
   controls.target.set(10, 3, -3);
-}
-function camera4() {
+});
+btn4.addEventListener('click', function () {
   camera.position.set(-39, 3, 4);
   controls.target.set(0, 3, 0);
-}
+});
+btn5.addEventListener('click', function () {
+  camera.position.set(35, 35, -35);
+  controls.target.set(0, 0, 0);
+});
 "use strict";
 //RENDER.JS
 /* render scene */
