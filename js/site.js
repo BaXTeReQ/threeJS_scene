@@ -358,22 +358,22 @@ new THREE.MeshStandardMaterial({
   color: 0x34495e
 }),
 /* lightRed */
-new THREE.MeshStandardMaterial({
+new THREE.MeshBasicMaterial({
   color: 0xd63031,
   transparent: true,
-  opacity: .9
+  opacity: .7
 }),
 /* lightYellow */
-new THREE.MeshStandardMaterial({
+new THREE.MeshBasicMaterial({
   color: 0xf1c40f,
   transparent: true,
-  opacity: .9
+  opacity: .7
 }),
 /* lightGreen */
-new THREE.MeshStandardMaterial({
+new THREE.MeshBasicMaterial({
   color: 0x00b894,
   transparent: true,
-  opacity: .9
+  opacity: .7
 })];
 var trafficLightElements = [
 /* bottom */
@@ -397,6 +397,49 @@ trafficLightElements.forEach(function (e) {
   e.castShadow = true;
   e.receiveShadow = true;
 });
+/* array for lights */
+var RedLights = [new THREE.SpotLight(0xd63031, .9, 25, Math.PI / 3, 1, 1), new THREE.SpotLight(0xd63031, .9, 25, Math.PI / 3, 1, 1), new THREE.SpotLight(0xd63031, 0, 25, Math.PI / 3, 1, 1)];
+var YellowLights = [new THREE.SpotLight(0xf1c40f, 0, 25, Math.PI / 3, 1, 1), new THREE.SpotLight(0xf1c40f, 0, 25, Math.PI / 3, 1, 1), new THREE.SpotLight(0xf1c40f, 0, 25, Math.PI / 3, 1, 1)];
+var GreenLights = [new THREE.SpotLight(0x00b894, 0, 25, Math.PI / 3, 1, 1), new THREE.SpotLight(0x00b894, 0, 25, Math.PI / 3, 1, 1), new THREE.SpotLight(0x00b894, .9, 25, Math.PI / 3, 1, 1)];
+/* switching functions */
+function redLightOn(x) {
+  RedLights[x].intensity = .9;
+}
+function redLightOff(x) {
+  RedLights[x].intensity = 0;
+}
+function yellowLightOn(x) {
+  YellowLights[x].intensity = .9;
+}
+function yellowLightOff(x) {
+  YellowLights[x].intensity = 0;
+}
+function greenLightOn(x) {
+  GreenLights[x].intensity = .9;
+}
+function greenLightOff(x) {
+  GreenLights[x].intensity = 0;
+}
+var onSequence = [redLightOn, yellowLightOn, greenLightOn];
+var offFunction = function offFunction(x) {
+  redLightOff(x);
+  yellowLightOff(x);
+  greenLightOff(x);
+};
+var sequenceIndex = 0;
+var sequenceIndex1 = 2;
+var direction = -1;
+setInterval(function () {
+  offFunction(0);
+  offFunction(1);
+  offFunction(2);
+  onSequence[sequenceIndex](0);
+  onSequence[sequenceIndex](1);
+  onSequence[sequenceIndex1](2);
+  if (sequenceIndex === onSequence.length - 1 || sequenceIndex === 0) direction = -direction;
+  sequenceIndex = sequenceIndex + direction;
+  sequenceIndex1 = sequenceIndex1 - direction;
+}, 2500);
 /* positions for lantern elements */
 trafficLightElements[0].position.set(0, 1, 0);
 trafficLightElements[1].position.set(0, 45, 0);
@@ -406,6 +449,24 @@ trafficLightElements[4].position.set(4, 88, 60);
 trafficLightElements[5].position.set(5, 96, 60);
 trafficLightElements[6].position.set(5, 88, 60);
 trafficLightElements[7].position.set(5, 80, 60);
+RedLights[0].position.set(8, 8, -3);
+RedLights[1].position.set(-8, 8, 3);
+RedLights[2].position.set(3, 8, 8);
+YellowLights[0].position.set(8, 7.4, -3);
+YellowLights[1].position.set(-8, 7.4, 3);
+YellowLights[2].position.set(3, 7.4, 8);
+GreenLights[0].position.set(8, 6.8, -3);
+GreenLights[1].position.set(-8, 6.8, 3);
+GreenLights[2].position.set(3, 6.8, 8);
+RedLights[0].target.position.set(30, 0, -3);
+RedLights[1].target.position.set(-30, 0, 3);
+RedLights[2].target.position.set(3, 0, 30);
+YellowLights[0].target.position.set(30, 0, -3);
+YellowLights[1].target.position.set(-30, 0, 3);
+YellowLights[2].target.position.set(3, 0, 30);
+GreenLights[0].target.position.set(30, 0, -3);
+GreenLights[1].target.position.set(-30, 0, 3);
+GreenLights[2].target.position.set(3, 0, 30);
 /* rotations for lantern elements */
 trafficLightElements[2].rotateX(Math.PI / 2);
 trafficLightElements[3].rotateY(Math.PI);
@@ -430,7 +491,7 @@ trafficLight2.position.set(7.5, .8, 7.5);
 trafficLight1.rotateY(Math.PI);
 trafficLight2.rotateY(-Math.PI / 2);
 /* adding to scene */
-scene.add(trafficLight0, trafficLight1, trafficLight2);
+scene.add(trafficLight0, trafficLight1, trafficLight2, RedLights[0], RedLights[0].target, RedLights[1], RedLights[1].target, RedLights[2], RedLights[2].target, YellowLights[0], YellowLights[0].target, YellowLights[1], YellowLights[1].target, YellowLights[2], YellowLights[2].target, GreenLights[0], GreenLights[0].target, GreenLights[1], GreenLights[1].target, GreenLights[2], GreenLights[2].target);
 "use strict";
 /* TREE0.JS */
 /* geometry */
@@ -455,7 +516,7 @@ new THREE.MeshStandardMaterial({
 })];
 /* elements for tree */
 var treeElements = [
-/* trunk */
+/* trunk0 */
 new THREE.Mesh(treeGeometry[0], treeMaterials[0]),
 /* leaves0 */
 new THREE.Mesh(treeGeometry[1], treeMaterials[1]),
@@ -466,7 +527,9 @@ new THREE.Mesh(treeGeometry[1], treeMaterials[1]),
 /* leaves3 */
 new THREE.Mesh(treeGeometry[2], treeMaterials[1]),
 /* leaves4 */
-new THREE.Mesh(treeGeometry[3], treeMaterials[1])];
+new THREE.Mesh(treeGeometry[3], treeMaterials[1]),
+/* trunk1 */
+new THREE.Mesh(treeGeometry[0], treeMaterials[0])];
 /* shadows for tree elements */
 treeElements.forEach(function (e) {
   e.receiveShadow = true;
@@ -479,6 +542,7 @@ treeElements[2].position.set(0, 1.5, 0);
 treeElements[3].position.set(0, 3, 0);
 treeElements[4].position.set(0, 4.25, 0);
 treeElements[5].position.set(0, 2.5, 0);
+treeElements[6].position.set(0, 0, 0);
 /* scale for tree elements */
 treeElements[2].scale.set(.75, .75, .75);
 treeElements[3].scale.set(.5, .5, .5);
@@ -486,7 +550,7 @@ treeElements[4].scale.set(.375, .5, .375);
 /* group for tree elements */
 var tree0Single = new THREE.Group();
 var tree1Single = new THREE.Group();
-tree0Single.add(treeElements[0], treeElements[1], treeElements[2], treeElements[3], treeElements[4]);
+tree0Single.add(treeElements[1], treeElements[2], treeElements[3], treeElements[4], treeElements[6]);
 tree1Single.add(treeElements[0], treeElements[5]);
 /* tree objects */
 var tree0 = tree0Single.clone();
@@ -640,6 +704,9 @@ function animate() {
   daySpotLight.position.y = 100 * Math.cos(Date.now() / 4800);
   nightSpotLight.position.x = -100 * Math.sin(Date.now() / 4800);
   nightSpotLight.position.y = -100 * Math.cos(Date.now() / 4800);
+  /* changing background color during a day */
+  var color = Math.floor((Math.cos(Date.now() / 4800) + 1) / 2 * 255);
+  renderer.setClearColor(new THREE.Color("rgb(".concat(color, ", ").concat(color, ", ").concat(color, ")")));
   /* changing lights intensity */
   if (daySpotLight.position.y < 50 && daySpotLight.position.x > 0) {
     daySpotLight.intensity -= .0035;

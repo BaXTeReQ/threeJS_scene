@@ -16,12 +16,13 @@ const treeMaterials = [
 
 /* elements for tree */
 const treeElements = [
-    /* trunk */new THREE.Mesh(treeGeometry[0], treeMaterials[0]),
+    /* trunk0 */new THREE.Mesh(treeGeometry[0], treeMaterials[0]),
     /* leaves0 */new THREE.Mesh(treeGeometry[1], treeMaterials[1]),
     /* leaves1 */new THREE.Mesh(treeGeometry[1], treeMaterials[1]),
     /* leaves2 */new THREE.Mesh(treeGeometry[1], treeMaterials[1]),
     /* leaves3 */new THREE.Mesh(treeGeometry[2], treeMaterials[1]),
-    /* leaves4 */new THREE.Mesh(treeGeometry[3], treeMaterials[1])
+    /* leaves4 */new THREE.Mesh(treeGeometry[3], treeMaterials[1]),
+    /* trunk1 */new THREE.Mesh(treeGeometry[0], treeMaterials[0])
 ]
 
 /* shadows for tree elements */
@@ -37,6 +38,7 @@ treeElements[2].position.set(0, 1.5, 0)
 treeElements[3].position.set(0, 3, 0)
 treeElements[4].position.set(0, 4.25, 0)
 treeElements[5].position.set(0, 2.5, 0)
+treeElements[6].position.set(0, 0, 0)
 
 /* scale for tree elements */
 treeElements[2].scale.set(.75, .75, .75)
@@ -46,7 +48,7 @@ treeElements[4].scale.set(.375, .5, .375)
 /* group for tree elements */
 const tree0Single = new THREE.Group()
 const tree1Single = new THREE.Group()
-tree0Single.add(treeElements[0], treeElements[1], treeElements[2], treeElements[3], treeElements[4])
+tree0Single.add(treeElements[1], treeElements[2], treeElements[3], treeElements[4], treeElements[6])
 tree1Single.add(treeElements[0], treeElements[5])
 
 /* tree objects */
@@ -84,6 +86,6 @@ tree9.rotateY(Math.PI / Math.random() * 7 + 1)
 
 /* adding to scene */
 scene.add(
-    tree0, tree1, tree2, 
+    tree0, tree1, tree2,
     tree3, tree4, tree5, tree6, tree7, tree8, tree9
 )
